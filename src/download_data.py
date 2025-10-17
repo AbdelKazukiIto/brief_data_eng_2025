@@ -10,7 +10,7 @@ class NYCTaxiDataDownloader:
         self.DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     def get_file_path(self, month: int) -> Path:
-        filename = f"{self.BASE_URL}/yellow_tripdata_{self.YEAR}-{month:02d}.parquet"
+        filename = f"yellow_tripdata_{self.YEAR}-{month:02d}.parquet"
         return self.DATA_DIR / filename
 
     def file_exists(self, month: int) -> bool:
