@@ -23,31 +23,20 @@ class DuckDBImporter:
     def _initialize_database(self):
         """Crée les tables nécessaires si elles n'existent pas."""
         try:
+            data_dir = Path(self.db_path).parent / "data" / "raw"
+
+            # Trouver un fichier Parquet valide pour extraire le schéma
+            parquet_files = sorted(data_dir.glob("*.parquet"))
+            if not parquet_files:
+                raise FileNotFoundError(f"No parquet files found in {data_dir}")
+            sample_file = parquet_files[0]
+            
             # Schéma de la table principale des trajets
-            self.conn.execute("""
-                        CREATE TABLE IF NOT EXISTS yellow_taxi_trips (
-                            VendorID BIGINT,
-                            tpep_pickup_datetime TIMESTAMP,
-                            tpep_dropoff_datetime TIMESTAMP,
-                            passenger_count DOUBLE,
-                            trip_distance DOUBLE,
-                            RatecodeID DOUBLE,
-                            store_and_fwd_flag VARCHAR,
-                            PULocationID BIGINT,
-                            DOLocationID BIGINT,
-                            payment_type BIGINT,
-                            fare_amount DOUBLE,
-                            extra DOUBLE,
-                            mta_tax DOUBLE,
-                            tip_amount DOUBLE,
-                            tolls_amount DOUBLE,
-                            improvement_surcharge DOUBLE,
-                            total_amount DOUBLE,
-                            congestion_surcharge DOUBLE,
-                            Airport_fee DOUBLE,
-                            cbd_congestion_fee DOUBLE
-                        );
-                        """)
+            self.conn.execute(f"""
+                CREATE TABLE IF NOT EXISTS yellow_taxi_trips AS 
+                SELECT * FROM read_parquet('{sample_file}')
+                WHERE 1=0;
+            """)
 
             
             # Schéma de la table de log pour suivre les imports
