@@ -25,28 +25,30 @@ class DuckDBImporter:
         try:
             # Schéma de la table principale des trajets
             self.conn.execute("""
-            CREATE TABLE IF NOT EXISTS yellow_taxi_trips (
-                VendorID BIGINT,
-                tpep_pickup_datetime TIMESTAMP,
-                tpep_dropoff_datetime TIMESTAMP,
-                passenger_count DOUBLE,
-                trip_distance DOUBLE,
-                RatecodeID DOUBLE,
-                store_and_fwd_flag VARCHAR,
-                PULocationID BIGINT,
-                DOLocationID BIGINT,
-                payment_type BIGINT,
-                fare_amount DOUBLE,
-                extra DOUBLE,
-                mta_tax DOUBLE,
-                tip_amount DOUBLE,
-                tolls_amount DOUBLE,
-                improvement_surcharge DOUBLE,
-                total_amount DOUBLE,
-                congestion_surcharge DOUBLE,
-                Airport_fee DOUBLE
-            );
-            """)
+                        CREATE TABLE IF NOT EXISTS yellow_taxi_trips (
+                            VendorID BIGINT,
+                            tpep_pickup_datetime TIMESTAMP,
+                            tpep_dropoff_datetime TIMESTAMP,
+                            passenger_count DOUBLE,
+                            trip_distance DOUBLE,
+                            RatecodeID DOUBLE,
+                            store_and_fwd_flag VARCHAR,
+                            PULocationID BIGINT,
+                            DOLocationID BIGINT,
+                            payment_type BIGINT,
+                            fare_amount DOUBLE,
+                            extra DOUBLE,
+                            mta_tax DOUBLE,
+                            tip_amount DOUBLE,
+                            tolls_amount DOUBLE,
+                            improvement_surcharge DOUBLE,
+                            total_amount DOUBLE,
+                            congestion_surcharge DOUBLE,
+                            Airport_fee DOUBLE,
+                            cbd_congestion_fee DOUBLE
+                        );
+                        """)
+
             
             # Schéma de la table de log pour suivre les imports
             self.conn.execute("""
@@ -192,11 +194,10 @@ class DuckDBImporter:
 
 if __name__ == "__main__":
     
-    # Définir les chemins (ajustez au besoin)
-    # On suppose que ce script est dans 'src/' et que les données sont dans 'data/'
-    BASE_DIR = Path(__file__).resolve().parent.parent
+    # Définir les chemins
+    BASE_DIR = Path(__file__).resolve().parent
     DB_FILE = BASE_DIR / "taxi_data.duckdb"
-    DATA_DIR = BASE_DIR / "data" # Répertoire contenant les .parquet
+    DATA_DIR = BASE_DIR / "data" / "raw"  # Répertoire contenant les .parquet
 
     # Création d'un répertoire de données factice s'il n'existe pas
     # (Pour les tests, vous devriez placer vos vrais fichiers Parquet ici)
