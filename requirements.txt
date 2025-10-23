@@ -2,6 +2,8 @@ requests==2.31.0
 pandas==2.2.0
 pyarrow==15.0.0
 fastparquet==2024.2.0
+duckdb==1.4.1
+inflection
 
 psycopg2-binary==2.9.9
 sqlalchemy==2.0.25
