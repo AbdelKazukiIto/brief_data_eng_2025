@@ -20,7 +20,7 @@ except Exception:
 
 @dataclass
 class PostgresConfig:
-    host: str = "localhost" # os.getenv("POSTGRES_HOST", os.getenv("PG_HOST", "localhost"))
+    host: str = "postgres" # os.getenv("POSTGRES_HOST", os.getenv("PG_HOST", "localhost"))
     port: int = int(os.getenv("POSTGRES_PORT", os.getenv("PG_PORT", "5432")))
     user: str = os.getenv("POSTGRES_USER", os.getenv("PG_USER", "postgres"))
     password: str = os.getenv("POSTGRES_PASSWORD", os.getenv("PG_PASSWORD", "postgres"))
@@ -223,10 +223,10 @@ class Loader:
 
 if __name__ == "__main__":
     # Adapt paths & env as needed
-    duckdb_path = "/home/utilisateur/Documents/projects/data_inge/DI04 - brief_data_eng_2025/data/duckdb/data.duckdb"
+    duckdb_path = "./data/duckdb/data.duckdb"
     pg_cfg = PostgresConfig()
 
-    target_duck_table = "main.nyctaxi"   # <- change if needed
+    target_duck_table = "main.my_table"   # <- change if needed
     target_pg_table = "nyctaxi"          # <- or set None to reuse DuckDB table name
 
     loader = Loader(duckdb_path, pg_cfg)
