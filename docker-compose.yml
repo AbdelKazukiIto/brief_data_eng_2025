@@ -44,5 +44,29 @@ services:
     command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
     restart: unless-stopped
 
+  api:
+    build:
+      context: ./api
+      dockerfile: dockerfile
+    container_name: api
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-nyc_taxi}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      APP_ENV: ${APP_ENV:-development}
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./api:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+
 volumes:
   postgres_data:
