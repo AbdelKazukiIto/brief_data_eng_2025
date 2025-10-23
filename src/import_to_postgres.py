@@ -22,6 +22,7 @@ class PostgresImporter:
             self._initialize_database()
         except SQLAlchemyError as e:
             print(f"Failed to connect or initialize database: {e}", file=sys.stderr)
+            print("db_url:", db_url)
             sys.exit(1)
 
     def _initialize_database(self):
@@ -153,6 +154,7 @@ class PostgresImporter:
 
 if __name__ == "__main__":
     DATABASE_URL = os.getenv("DATABASE_URL")
+    print(">>>>> DATABASE_URL:", DATABASE_URL)
     BASE_DIR = Path(__file__).resolve().parent.parent
     DATA_DIR = BASE_DIR / "data" / "raw"
     DATA_DIR.mkdir(parents=True, exist_ok=True)

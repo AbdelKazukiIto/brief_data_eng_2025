@@ -33,6 +33,8 @@ services:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       APP_ENV: ${APP_ENV:-development}
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     volumes:
