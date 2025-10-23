@@ -226,8 +226,8 @@ if __name__ == "__main__":
     duckdb_path = "/home/utilisateur/Documents/projects/data_inge/DI04 - brief_data_eng_2025/data/duckdb/data.duckdb"
     pg_cfg = PostgresConfig()
 
-    target_duck_table = "main.my_table"   # <- change if needed
-    target_pg_table = "my_table"          # <- or set None to reuse DuckDB table name
+    target_duck_table = "main.nyctaxi"   # <- change if needed
+    target_pg_table = "nyctaxi"          # <- or set None to reuse DuckDB table name
 
     loader = Loader(duckdb_path, pg_cfg)
 
