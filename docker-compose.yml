@@ -59,7 +59,7 @@ services:
       POSTGRES_PORT: 5432
       APP_ENV: ${APP_ENV:-development}
     ports:
-      - "8001:8000"
+      - "8001:8001"
     volumes:
       - ./api:/app
     depends_on:
